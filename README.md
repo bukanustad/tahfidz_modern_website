@@ -9,7 +9,7 @@ Berikut adalah visualisasi antarmuka sistem yang telah dikembangkan:
 ![Dashboard Utama](Tangkapan%20Layar%202026-06-26%20pukul%2001.14.17.png)
 
 ### 2. Statistik & Analisis AI
-![Statistik & AI](Tangkapan%20Layar%202026-06-25%20pukul%2023.16.14.jpg)
+![Statistik & AI](Tangkapan%20Layar%202026-06-26%20pukul%2001.15.01.png)
 
 ---
 
