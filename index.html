@@ -1,0 +1,1395 @@
+<!doctype html>
+<html lang="id" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sistem Tahfidz - PP Nurut Taqwa</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: { sans: ["Inter", "sans-serif"] },
+            colors: {
+              googleGreen: "#0F9D58",
+              googleGreenDark: "#0B8043",
+              googleGreenLight: "#e6f4ea",
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      body {
+        background-color: #f8f9fa;
+      }
+
+      /* Animasi Ornamen Hero */
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-15px) rotate(3deg);
+        }
+      }
+      .animate-float {
+        animation: float 6s ease-in-out infinite;
+      }
+      .animate-float-delayed {
+        animation: float 8s ease-in-out 3s infinite;
+      }
+
+      /* Sembunyikan elemen Alpine sebelum dimuat */
+      [x-cloak] {
+        display: none !important;
+      }
+
+      /* Hilangkan scrollbar bawaan */
+      .hide-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .hide-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      /* Transisi halus untuk grafik bundar (SVG) */
+      .circle-transition {
+        transition: stroke-dasharray 1s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      /* Animasi kilau untuk AI AI */
+      @keyframes shimmer {
+        0% {
+          transform: translateX(-100%);
+        }
+        100% {
+          transform: translateX(100%);
+        }
+      }
+      .animate-shimmer {
+        animation: shimmer 2s infinite linear;
+      }
+    </style>
+  </head>
+  <body
+    class="text-slate-800 antialiased selection:bg-googleGreen selection:text-white"
+  >
+    <nav
+      x-data="{ isOpen: false }"
+      class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm transition-all"
+    >
+      <div class="container mx-auto px-4 md:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16 md:h-20">
+          <div class="flex items-center gap-3">
+            <img
+              src="logoatas.png"
+              class="w-32 md:w-[180px] object-contain"
+              alt="Logo"
+            />
+          </div>
+          <div class="hidden md:flex gap-8 text-sm font-medium text-slate-600">
+            <a
+              href="#"
+              class="text-googleGreen font-semibold border-b-2 border-googleGreen py-1"
+              >Beranda</a
+            >
+            <a href="#" class="hover:text-googleGreen transition-colors py-1"
+              >Portal Santri</a
+            >
+            <a href="#" class="hover:text-googleGreen transition-colors py-1"
+              >Informasi</a
+            >
+          </div>
+          <div class="hidden md:flex items-center gap-4">
+            <button
+              class="bg-googleGreen hover:bg-googleGreenDark text-white px-6 py-2.5 rounded-full text-sm font-semibold transition-all shadow-md"
+            >
+              Login Wali
+            </button>
+          </div>
+          <button
+            @click="isOpen = !isOpen"
+            class="md:hidden text-slate-600 p-2 focus:outline-none"
+          >
+            <i class="fa-solid fa-bars text-2xl" x-show="!isOpen"></i>
+            <i class="fa-solid fa-xmark text-2xl" x-show="isOpen" x-cloak></i>
+          </button>
+        </div>
+      </div>
+
+      <div
+        x-show="isOpen"
+        x-collapse
+        class="md:hidden bg-white border-b border-slate-200"
+        x-cloak
+      >
+        <div class="px-4 py-4 space-y-3">
+          <a
+            href="#"
+            class="block px-4 py-2 bg-googleGreenLight text-googleGreen rounded-lg font-semibold"
+            >Beranda</a
+          >
+          <a
+            href="#"
+            class="block px-4 py-2 text-slate-600 font-medium hover:bg-slate-50 rounded-lg"
+            >Portal Santri</a
+          >
+          <a
+            href="#"
+            class="block px-4 py-2 text-slate-600 font-medium hover:bg-slate-50 rounded-lg"
+            >Informasi</a
+          >
+          <button
+            class="w-full bg-googleGreen text-white px-4 py-2 rounded-lg font-semibold mt-2 shadow-sm"
+          >
+            Login Wali
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <main
+      class="container mx-auto px-4 md:px-6 lg:px-8 mt-6 md:mt-8 overflow-hidden"
+    >
+      <section
+        x-data="{ slide: 1 }"
+        x-init="setInterval(() => { slide = slide === 3 ? 1 : slide + 1 }, 5000)"
+        class="relative rounded-[2rem] h-[400px] md:h-[500px] overflow-hidden shadow-xl bg-slate-900"
+      >
+        <div
+          x-show="slide === 1"
+          x-transition.opacity.duration.1000ms
+          class="absolute inset-0 bg-gradient-to-r from-googleGreen to-[#0A6C3C] flex items-center"
+          x-cloak
+        >
+          <div class="px-6 md:px-16 w-full md:w-2/3 z-20">
+            <img
+              src="logoatas.png"
+              class="w-28 md:w-[180px] mb-4 md:mb-6 object-contain"
+              alt=""
+            />
+            <h1
+              class="text-3xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-3 md:mb-4 tracking-tight"
+            >
+              Pantau Capaian<br />Hafalan Santri
+            </h1>
+            <p
+              class="text-green-50 text-sm md:text-lg opacity-90 font-light mb-8 max-w-lg"
+            >
+              Pantau perkembangan tahfidz, kelancaran tajwid, dan kelulusan juz
+              secara real-time dari perangkat Anda.
+            </p>
+          </div>
+        </div>
+        <div
+          x-show="slide === 2"
+          x-transition.opacity.duration.1000ms
+          class="absolute inset-0 bg-gradient-to-r from-blue-700 to-indigo-900 flex items-center"
+          x-cloak
+        >
+          <div class="px-6 md:px-16 w-full md:w-2/3 z-20">
+            <img
+              src="logoatas.png"
+              class="w-28 md:w-[180px] mb-4 md:mb-6 object-contain"
+              alt=""
+            />
+            <h1
+              class="text-3xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-3 md:mb-4 tracking-tight"
+            >
+              Mencetak Para<br />Penjaga Al-Quran
+            </h1>
+            <p
+              class="text-blue-50 text-sm md:text-lg opacity-90 font-light mb-8 max-w-lg"
+            >
+              Didukung oleh Muallim dan pengasuh berpengalaman dengan sanad
+              keilmuan yang bersambung.
+            </p>
+          </div>
+        </div>
+        <div
+          x-show="slide === 3"
+          x-transition.opacity.duration.1000ms
+          class="absolute inset-0 bg-gradient-to-r from-amber-600 to-orange-700 flex items-center"
+          x-cloak
+        >
+          <div class="px-6 md:px-16 w-full md:w-2/3 z-20">
+            <img
+              src="logoatas.png"
+              class="w-28 md:w-[180px] mb-4 md:mb-6 object-contain"
+              alt=""
+            />
+            <h1
+              class="text-3xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-3 md:mb-4 tracking-tight"
+            >
+              Evaluasi Belajar<br />Lebih Terukur
+            </h1>
+            <p
+              class="text-orange-50 text-sm md:text-lg opacity-90 font-light mb-8 max-w-lg"
+            >
+              Akses grafik perkembangan santri, absensi kehadiran setoran, dan
+              rekap ujian setiap bulan.
+            </p>
+          </div>
+        </div>
+
+        <div class="absolute inset-0 pointer-events-none z-10 overflow-hidden">
+          <i
+            class="fa-solid fa-moon text-white/20 text-[10rem] md:text-[15rem] absolute -right-5 md:-right-10 -bottom-10 md:-bottom-20 animate-float"
+          ></i>
+          <i
+            class="fa-solid fa-star text-yellow-300/60 text-3xl md:text-4xl absolute right-1/4 top-10 md:top-20 animate-float-delayed drop-shadow-[0_0_15px_rgba(253,224,71,0.5)]"
+          ></i>
+          <div
+            class="absolute inset-0 opacity-[0.03] mix-blend-overlay"
+            style="
+              background-image: radial-gradient(#fff 2px, transparent 2px);
+              background-size: 30px 30px;
+            "
+          ></div>
+        </div>
+
+        <div class="absolute bottom-6 left-6 md:left-16 z-30 flex gap-2">
+          <button
+            @click="slide = 1"
+            :class="slide === 1 ? 'w-8 bg-white' : 'w-2 bg-white/50'"
+            class="h-2 rounded-full transition-all duration-300"
+          ></button>
+          <button
+            @click="slide = 2"
+            :class="slide === 2 ? 'w-8 bg-white' : 'w-2 bg-white/50'"
+            class="h-2 rounded-full transition-all duration-300"
+          ></button>
+          <button
+            @click="slide = 3"
+            :class="slide === 3 ? 'w-8 bg-white' : 'w-2 bg-white/50'"
+            class="h-2 rounded-full transition-all duration-300"
+          ></button>
+        </div>
+      </section>
+
+      <section x-data="{ tab: 'statistik' }" class="mt-8 md:mt-12">
+        <div
+          class="bg-white p-2 rounded-2xl shadow-sm border border-slate-200 flex overflow-x-auto hide-scrollbar gap-2 mb-6 w-full lg:w-max mx-auto snap-x snap-mandatory"
+        >
+          <button
+            @click="tab = 'data_santri'"
+            :class="tab === 'data_santri' ? 'bg-googleGreen text-white shadow-md' : 'text-slate-600 hover:bg-slate-100'"
+            class="snap-center px-4 py-2.5 md:px-5 md:py-2.5 rounded-xl font-semibold text-xs md:text-sm transition-all duration-300 flex-shrink-0 flex items-center gap-2"
+          >
+            <i class="fa-solid fa-users"></i> Data Santri
+          </button>
+          <button
+            @click="tab = 'setoran'"
+            :class="tab === 'setoran' ? 'bg-googleGreen text-white shadow-md' : 'text-slate-600 hover:bg-slate-100'"
+            class="snap-center px-4 py-2.5 md:px-5 md:py-2.5 rounded-xl font-semibold text-xs md:text-sm transition-all duration-300 flex-shrink-0 flex items-center gap-2"
+          >
+            <i class="fa-solid fa-book-open-reader"></i> Jadwal Setoran
+          </button>
+          <button
+            @click="tab = 'khotmil'"
+            :class="tab === 'khotmil' ? 'bg-googleGreen text-white shadow-md' : 'text-slate-600 hover:bg-slate-100'"
+            class="snap-center px-4 py-2.5 md:px-5 md:py-2.5 rounded-xl font-semibold text-xs md:text-sm transition-all duration-300 flex-shrink-0 flex items-center gap-2"
+          >
+            <i class="fa-solid fa-crown text-yellow-400"></i> Khotmil Qur'an
+          </button>
+          <button
+            @click="tab = 'muallim'"
+            :class="tab === 'muallim' ? 'bg-googleGreen text-white shadow-md' : 'text-slate-600 hover:bg-slate-100'"
+            class="snap-center px-4 py-2.5 md:px-5 md:py-2.5 rounded-xl font-semibold text-xs md:text-sm transition-all duration-300 flex-shrink-0 flex items-center gap-2"
+          >
+            <i class="fa-solid fa-chalkboard-user"></i> Muallim
+          </button>
+          <button
+            @click="tab = 'statistik'"
+            :class="tab === 'statistik' ? 'bg-googleGreen text-white shadow-md' : 'text-slate-600 hover:bg-slate-100'"
+            class="snap-center px-4 py-2.5 md:px-5 md:py-2.5 rounded-xl font-semibold text-xs md:text-sm transition-all duration-300 flex-shrink-0 flex items-center gap-2"
+          >
+            <i class="fa-solid fa-chart-line"></i> Statistik & AI
+          </button>
+          <button
+            @click="tab = 'bantuan'"
+            :class="tab === 'bantuan' ? 'bg-googleGreen text-white shadow-md' : 'text-slate-600 hover:bg-slate-100'"
+            class="snap-center px-4 py-2.5 md:px-5 md:py-2.5 rounded-xl font-semibold text-xs md:text-sm transition-all duration-300 flex-shrink-0 flex items-center gap-2"
+          >
+            <i class="fa-solid fa-headset"></i> Bantuan
+          </button>
+        </div>
+
+        <div class="min-h-[400px]">
+          <div
+            x-show="tab === 'data_santri'"
+            x-transition:enter="transition ease-out duration-500"
+            x-transition:enter-start="opacity-0 translate-y-4"
+            x-transition:enter-end="opacity-100 translate-y-0"
+            x-cloak
+          >
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <div class="lg:col-span-2 space-y-6">
+                <div
+                  class="bg-white p-5 md:p-6 rounded-3xl shadow-sm border border-slate-200"
+                >
+                  <h3 class="text-lg md:text-xl font-bold text-slate-900 mb-6">
+                    Rekapitulasi Santri Tahfidz
+                  </h3>
+                  <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                    <div
+                      class="col-span-2 sm:col-span-1 bg-slate-50 p-4 md:p-5 rounded-2xl border border-slate-100 hover:shadow-md transition"
+                    >
+                      <div class="text-googleGreen mb-2">
+                        <i class="fa-solid fa-users text-2xl"></i>
+                      </div>
+                      <p class="text-2xl md:text-3xl font-black text-slate-800">
+                        1,245
+                      </p>
+                      <p
+                        class="text-slate-500 text-[10px] md:text-xs font-semibold uppercase tracking-wide mt-1"
+                      >
+                        Total Santri
+                      </p>
+                    </div>
+                    <div
+                      class="bg-blue-50/50 p-4 md:p-5 rounded-2xl border border-blue-100 hover:shadow-md transition"
+                    >
+                      <div class="text-blue-600 mb-2">
+                        <i class="fa-solid fa-mars text-2xl"></i>
+                      </div>
+                      <p class="text-2xl md:text-3xl font-black text-slate-800">
+                        580
+                      </p>
+                      <p
+                        class="text-blue-600 text-[10px] md:text-xs font-semibold uppercase tracking-wide mt-1"
+                      >
+                        Putra
+                      </p>
+                    </div>
+                    <div
+                      class="bg-pink-50/50 p-4 md:p-5 rounded-2xl border border-pink-100 hover:shadow-md transition"
+                    >
+                      <div class="text-pink-500 mb-2">
+                        <i class="fa-solid fa-venus text-2xl"></i>
+                      </div>
+                      <p class="text-2xl md:text-3xl font-black text-slate-800">
+                        665
+                      </p>
+                      <p
+                        class="text-pink-500 text-[10px] md:text-xs font-semibold uppercase tracking-wide mt-1"
+                      >
+                        Putri
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="bg-gradient-to-r from-amber-100 to-orange-50 p-5 md:p-6 rounded-3xl border border-amber-200 flex flex-col sm:flex-row items-start sm:items-center gap-4"
+                >
+                  <div
+                    class="w-10 h-10 md:w-12 md:h-12 bg-white rounded-full flex items-center justify-center text-amber-500 shadow-sm shrink-0"
+                  >
+                    <i class="fa-solid fa-bell text-lg md:text-xl"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-amber-900 text-sm md:text-base">
+                      Informasi Terkini
+                    </h4>
+                    <p class="text-amber-700 text-xs md:text-sm mt-1">
+                      Pendaftaran ujian tahfidz periode ganjil telah ditutup.
+                      Persiapan pra-karantina dimulai 10 Juli 2026.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="bg-white p-5 md:p-6 rounded-3xl shadow-sm border border-slate-200"
+              >
+                <div class="flex items-center justify-between mb-6">
+                  <h3 class="font-bold text-slate-900 text-sm md:text-base">
+                    <i
+                      class="fa-solid fa-ranking-star text-yellow-500 mr-2"
+                    ></i>
+                    Bintang Al-Quran
+                  </h3>
+                  <span
+                    class="text-[10px] md:text-xs bg-slate-100 text-slate-500 px-2 py-1 rounded-md"
+                    >Bulan Ini</span
+                  >
+                </div>
+                <div class="space-y-3 md:space-y-4">
+                  <div
+                    class="flex items-center gap-3 p-3 bg-gradient-to-r from-yellow-50 to-white border border-yellow-200 rounded-2xl"
+                  >
+                    <div
+                      class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-yellow-400 text-white text-sm font-bold flex items-center justify-center shadow-md shrink-0"
+                    >
+                      1
+                    </div>
+                    <div class="flex-1 min-w-0">
+                      <h4
+                        class="font-bold text-slate-800 text-xs md:text-sm truncate"
+                      >
+                        Ahmad Fawwaz
+                      </h4>
+                      <p class="text-[10px] md:text-xs text-slate-500">
+                        Kls 12 IPA
+                      </p>
+                    </div>
+                    <div class="text-right shrink-0">
+                      <span
+                        class="block text-base md:text-lg font-black text-googleGreen"
+                        >30 Juz</span
+                      ><span
+                        class="text-[9px] md:text-[10px] text-slate-400 font-bold uppercase"
+                        >Mutqin</span
+                      >
+                    </div>
+                  </div>
+                  <div
+                    class="flex items-center gap-3 p-3 bg-slate-50 border border-slate-100 rounded-2xl"
+                  >
+                    <div
+                      class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-slate-300 text-slate-700 text-sm font-bold flex items-center justify-center shrink-0"
+                    >
+                      2
+                    </div>
+                    <div class="flex-1 min-w-0">
+                      <h4
+                        class="font-bold text-slate-800 text-xs md:text-sm truncate"
+                      >
+                        Aisyah Putri
+                      </h4>
+                      <p class="text-[10px] md:text-xs text-slate-500">
+                        Kls 11 IPS
+                      </p>
+                    </div>
+                    <div class="text-right shrink-0">
+                      <span
+                        class="block text-sm md:text-base font-bold text-slate-700"
+                        >27 Juz</span
+                      >
+                    </div>
+                  </div>
+                  <div
+                    class="flex items-center gap-3 p-3 bg-slate-50 border border-slate-100 rounded-2xl"
+                  >
+                    <div
+                      class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-orange-200 text-orange-700 text-sm font-bold flex items-center justify-center shrink-0"
+                    >
+                      3
+                    </div>
+                    <div class="flex-1 min-w-0">
+                      <h4
+                        class="font-bold text-slate-800 text-xs md:text-sm truncate"
+                      >
+                        Zaki Mubarak
+                      </h4>
+                      <p class="text-[10px] md:text-xs text-slate-500">
+                        Kls 10 Agama
+                      </p>
+                    </div>
+                    <div class="text-right shrink-0">
+                      <span
+                        class="block text-sm md:text-base font-bold text-slate-700"
+                        >25 Juz</span
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            x-show="tab === 'setoran'"
+            x-transition:enter="transition ease-out duration-500"
+            x-transition:enter-start="opacity-0 translate-y-4"
+            x-transition:enter-end="opacity-100 translate-y-0"
+            x-cloak
+          >
+            <div class="text-center max-w-2xl mx-auto mb-8 md:mb-10">
+              <h3 class="text-xl md:text-2xl font-bold text-slate-900">
+                Agenda Setoran (Ziyadah & Murojaah)
+              </h3>
+              <p class="text-slate-500 mt-2 text-xs md:text-sm">
+                Waktu disiplin santri untuk menyetorkan hafalan baru maupun
+                mengulang hafalan lama.
+              </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+              <div
+                class="bg-white rounded-3xl p-5 md:p-6 border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group"
+              >
+                <div
+                  class="absolute top-0 right-0 w-20 h-20 md:w-24 md:h-24 bg-googleGreen/5 rounded-bl-full -z-0"
+                ></div>
+                <div
+                  class="flex justify-between items-start mb-4 relative z-10"
+                >
+                  <div
+                    class="w-10 h-10 md:w-12 md:h-12 bg-googleGreenLight text-googleGreen rounded-xl flex items-center justify-center text-lg md:text-xl"
+                  >
+                    <i class="fa-solid fa-sun"></i>
+                  </div>
+                  <span
+                    class="bg-red-100 text-red-600 px-2 py-1 md:px-3 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-wider"
+                    >Wajib</span
+                  >
+                </div>
+                <h4 class="text-lg md:text-xl font-bold text-slate-900 mb-1">
+                  Ba'da Subuh
+                </h4>
+                <p
+                  class="text-googleGreen font-semibold text-xs md:text-sm mb-4"
+                >
+                  Ziyadah (Hafalan Baru)
+                </p>
+                <div class="space-y-2 border-t border-slate-100 pt-4">
+                  <p
+                    class="text-xs md:text-sm text-slate-600 flex items-center gap-2"
+                  >
+                    <i class="fa-regular fa-clock text-slate-400 w-4"></i> 05:00
+                    - 06:30 WIB
+                  </p>
+                  <p
+                    class="text-xs md:text-sm text-slate-600 flex items-center gap-2"
+                  >
+                    <i class="fa-solid fa-location-dot text-slate-400 w-4"></i>
+                    Halaqah Masjid Utama
+                  </p>
+                </div>
+              </div>
+              <div
+                class="bg-white rounded-3xl p-5 md:p-6 border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group"
+              >
+                <div
+                  class="absolute top-0 right-0 w-20 h-20 md:w-24 md:h-24 bg-blue-50 rounded-bl-full -z-0"
+                ></div>
+                <div
+                  class="flex justify-between items-start mb-4 relative z-10"
+                >
+                  <div
+                    class="w-10 h-10 md:w-12 md:h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center text-lg md:text-xl"
+                  >
+                    <i class="fa-solid fa-cloud-sun"></i>
+                  </div>
+                  <span
+                    class="bg-red-100 text-red-600 px-2 py-1 md:px-3 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-wider"
+                    >Wajib</span
+                  >
+                </div>
+                <h4 class="text-lg md:text-xl font-bold text-slate-900 mb-1">
+                  Ba'da Ashar
+                </h4>
+                <p class="text-blue-600 font-semibold text-xs md:text-sm mb-4">
+                  Murojaah (Ulang Hafalan)
+                </p>
+                <div class="space-y-2 border-t border-slate-100 pt-4">
+                  <p
+                    class="text-xs md:text-sm text-slate-600 flex items-center gap-2"
+                  >
+                    <i class="fa-regular fa-clock text-slate-400 w-4"></i> 15:30
+                    - 17:00 WIB
+                  </p>
+                  <p
+                    class="text-xs md:text-sm text-slate-600 flex items-center gap-2"
+                  >
+                    <i class="fa-solid fa-location-dot text-slate-400 w-4"></i>
+                    Asrama & Teras Kelas
+                  </p>
+                </div>
+              </div>
+              <div
+                class="bg-white rounded-3xl p-5 md:p-6 border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group"
+              >
+                <div
+                  class="absolute top-0 right-0 w-20 h-20 md:w-24 md:h-24 bg-amber-50 rounded-bl-full -z-0"
+                ></div>
+                <div
+                  class="flex justify-between items-start mb-4 relative z-10"
+                >
+                  <div
+                    class="w-10 h-10 md:w-12 md:h-12 bg-amber-100 text-amber-600 rounded-xl flex items-center justify-center text-lg md:text-xl"
+                  >
+                    <i class="fa-solid fa-moon"></i>
+                  </div>
+                  <span
+                    class="bg-slate-100 text-slate-600 px-2 py-1 md:px-3 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-wider"
+                    >Terjadwal</span
+                  >
+                </div>
+                <h4 class="text-lg md:text-xl font-bold text-slate-900 mb-1">
+                  Ba'da Maghrib
+                </h4>
+                <p class="text-amber-600 font-semibold text-xs md:text-sm mb-4">
+                  Bina Tajwid & Tahsin
+                </p>
+                <div class="space-y-2 border-t border-slate-100 pt-4">
+                  <p
+                    class="text-xs md:text-sm text-slate-600 flex items-center gap-2"
+                  >
+                    <i class="fa-regular fa-clock text-slate-400 w-4"></i> 18:00
+                    - 19:00 WIB
+                  </p>
+                  <p
+                    class="text-xs md:text-sm text-slate-600 flex items-center gap-2"
+                  >
+                    <i class="fa-solid fa-location-dot text-slate-400 w-4"></i>
+                    Aula Utama Tahfidz
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            x-show="tab === 'khotmil'"
+            x-transition:enter="transition ease-out duration-500"
+            x-transition:enter-start="opacity-0 translate-y-4"
+            x-transition:enter-end="opacity-100 translate-y-0"
+            x-cloak
+          >
+            <div
+              class="bg-gradient-to-br from-slate-900 via-green-900 to-slate-900 rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-12 text-white shadow-2xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between"
+            >
+              <div class="absolute inset-0 opacity-20 pointer-events-none">
+                <div
+                  class="absolute top-5 right-5 w-40 h-40 md:w-64 md:h-64 bg-yellow-400 rounded-full blur-[60px] md:blur-[80px]"
+                ></div>
+                <div
+                  class="absolute bottom-0 left-0 w-40 h-40 md:w-64 md:h-64 bg-googleGreen rounded-full blur-[60px] md:blur-[80px]"
+                ></div>
+              </div>
+              <div
+                class="relative z-10 md:w-2/3 mb-8 md:mb-0 w-full text-center md:text-left"
+              >
+                <span
+                  class="inline-flex items-center gap-2 px-3 py-1.5 md:px-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-yellow-300 text-[10px] md:text-xs font-bold tracking-widest uppercase mb-4 md:mb-6"
+                >
+                  <i class="fa-solid fa-star"></i> Agenda Bulanan
+                </span>
+                <h2
+                  class="text-2xl md:text-5xl font-black mb-3 md:mb-4 leading-tight"
+                >
+                  Rutinan Khotmil Qur'an<br class="hidden md:block" />
+                  Ke-XIV
+                </h2>
+                <p
+                  class="text-slate-300 mb-6 max-w-md mx-auto md:mx-0 text-xs md:text-base leading-relaxed"
+                >
+                  Wisuda akbar bagi santri yang telah menyelesaikan hafalan 30
+                  Juz Bil Ghoib. Terbuka untuk seluruh wali santri.
+                </p>
+                <div
+                  class="flex flex-col sm:flex-row items-center md:items-start justify-center md:justify-start gap-4 md:gap-6 text-xs md:text-sm"
+                >
+                  <div class="flex items-center gap-3">
+                    <div
+                      class="w-8 h-8 md:w-10 md:h-10 bg-white/10 rounded-full flex items-center justify-center shrink-0"
+                    >
+                      <i class="fa-regular fa-calendar text-yellow-400"></i>
+                    </div>
+                    <div class="text-left">
+                      <p class="text-slate-400 text-[10px] md:text-xs">
+                        Tanggal
+                      </p>
+                      <p class="font-bold">15 Muharrom 1448 H</p>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-3">
+                    <div
+                      class="w-8 h-8 md:w-10 md:h-10 bg-white/10 rounded-full flex items-center justify-center shrink-0"
+                    >
+                      <i class="fa-solid fa-location-dot text-googleGreen"></i>
+                    </div>
+                    <div class="text-left">
+                      <p class="text-slate-400 text-[10px] md:text-xs">
+                        Lokasi
+                      </p>
+                      <p class="font-bold">Desa Solor, Kec. Cermee</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="relative z-10 bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-5 md:p-6 w-full md:w-1/3"
+              >
+                <h4
+                  class="font-bold text-base md:text-lg mb-4 flex items-center gap-2"
+                >
+                  <i class="fa-solid fa-list-check text-googleGreen"></i> Syarat
+                  Pendaftaran
+                </h4>
+                <ul
+                  class="space-y-2 md:space-y-3 text-xs md:text-sm text-slate-200"
+                >
+                  <li class="flex items-start gap-2">
+                    <i
+                      class="fa-solid fa-check text-googleGreen mt-0.5 md:mt-1"
+                    ></i>
+                    Lulus tasmi' 30 Juz sekali duduk.
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <i
+                      class="fa-solid fa-check text-googleGreen mt-0.5 md:mt-1"
+                    ></i>
+                    Menyelesaikan syahadah tajwid.
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <i
+                      class="fa-solid fa-check text-googleGreen mt-0.5 md:mt-1"
+                    ></i>
+                    Rekomendasi Muallim pusat.
+                  </li>
+                </ul>
+                <button
+                  class="w-full mt-5 md:mt-6 bg-yellow-400 hover:bg-yellow-500 text-slate-900 text-sm md:text-base font-bold py-2.5 md:py-3 rounded-xl transition shadow-lg transform hover:-translate-y-1"
+                >
+                  Daftar Sekarang
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div
+            x-show="tab === 'muallim'"
+            x-transition:enter="transition ease-out duration-500"
+            x-transition:enter-start="opacity-0 translate-y-4"
+            x-transition:enter-end="opacity-100 translate-y-0"
+            x-cloak
+          >
+            <div class="mb-6 md:mb-8 text-center md:text-left">
+              <h3 class="text-xl md:text-2xl font-bold text-slate-900">
+                Majelis Muallim & Musyrif
+              </h3>
+              <p class="text-slate-500 text-xs md:text-sm mt-1">
+                Para asatidz pembimbing hafalan bersertifikasi sanad yang
+                terhubung.
+              </p>
+            </div>
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+              <div
+                class="bg-white border border-slate-200 p-4 md:p-6 rounded-2xl md:rounded-3xl flex flex-col items-center text-center hover:border-googleGreen hover:shadow-xl transition-all duration-300"
+              >
+                <div
+                  class="w-16 h-16 md:w-24 md:h-24 bg-gradient-to-br from-green-100 to-green-200 rounded-full mb-3 md:mb-4 flex items-center justify-center text-googleGreen text-2xl md:text-4xl shadow-inner"
+                >
+                  <i class="fa-solid fa-user-tie"></i>
+                </div>
+                <h4 class="font-bold text-slate-900 text-sm md:text-lg mb-1">
+                  Ust. Ahmad Fadil
+                </h4>
+                <p
+                  class="text-[9px] md:text-xs font-bold text-white bg-googleGreen px-2 py-0.5 rounded-full mb-2 shadow-sm"
+                >
+                  Al-Hafidz 30 Juz
+                </p>
+                <p class="text-[10px] md:text-sm text-slate-500">
+                  Muallim Tahfidz Putra.
+                </p>
+              </div>
+              <div
+                class="bg-white border border-slate-200 p-4 md:p-6 rounded-2xl md:rounded-3xl flex flex-col items-center text-center hover:border-pink-500 hover:shadow-xl transition-all duration-300"
+              >
+                <div
+                  class="w-16 h-16 md:w-24 md:h-24 bg-gradient-to-br from-pink-100 to-pink-200 rounded-full mb-3 md:mb-4 flex items-center justify-center text-pink-500 text-2xl md:text-4xl shadow-inner"
+                >
+                  <i class="fa-solid fa-user-nurse"></i>
+                </div>
+                <h4 class="font-bold text-slate-900 text-sm md:text-lg mb-1">
+                  Ustzh. Siti Aisyah
+                </h4>
+                <p
+                  class="text-[9px] md:text-xs font-bold text-white bg-pink-500 px-2 py-0.5 rounded-full mb-2 shadow-sm"
+                >
+                  Al-Hafidzah 30 Juz
+                </p>
+                <p class="text-[10px] md:text-sm text-slate-500">
+                  Pembina qiro'ah sab'ah.
+                </p>
+              </div>
+              <div
+                class="bg-white border border-slate-200 p-4 md:p-6 rounded-2xl md:rounded-3xl flex flex-col items-center text-center hover:border-blue-500 hover:shadow-xl transition-all duration-300"
+              >
+                <div
+                  class="w-16 h-16 md:w-24 md:h-24 bg-gradient-to-br from-blue-100 to-blue-200 rounded-full mb-3 md:mb-4 flex items-center justify-center text-blue-600 text-2xl md:text-4xl shadow-inner"
+                >
+                  <i class="fa-solid fa-user-tie"></i>
+                </div>
+                <h4 class="font-bold text-slate-900 text-sm md:text-lg mb-1">
+                  Ust. Hasan Basri
+                </h4>
+                <p
+                  class="text-[9px] md:text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full mb-2 shadow-sm"
+                >
+                  Musyrif Khusus
+                </p>
+                <p class="text-[10px] md:text-sm text-slate-500">
+                  Pengampu kelas takhassus tafsir.
+                </p>
+              </div>
+              <div
+                class="bg-white border border-slate-200 p-4 md:p-6 rounded-2xl md:rounded-3xl flex flex-col items-center text-center hover:border-slate-800 hover:shadow-xl transition-all duration-300"
+              >
+                <div
+                  class="w-16 h-16 md:w-24 md:h-24 bg-gradient-to-br from-slate-100 to-slate-200 rounded-full mb-3 md:mb-4 flex items-center justify-center text-slate-600 text-2xl md:text-4xl shadow-inner"
+                >
+                  <i class="fa-solid fa-user"></i>
+                </div>
+                <h4 class="font-bold text-slate-900 text-sm md:text-lg mb-1">
+                  Ust. Rahmat H.
+                </h4>
+                <p
+                  class="text-[9px] md:text-xs font-bold text-slate-600 bg-slate-100 px-2 py-0.5 rounded-full mb-2 shadow-sm"
+                >
+                  Musyrif Pemula
+                </p>
+                <p class="text-[10px] md:text-sm text-slate-500">
+                  Pembimbing tahsin dasar.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div
+            x-show="tab === 'statistik'"
+            x-data="{ 
+                        filter: 'minggu', 
+                        // Data diperbanyak agar grafik terlihat ramai seperti market chart
+                        chartData: { 
+                           minggu: [30, 45, 35, 50, 60, 55, 75, 65, 80, 70, 85, 75, 90, 85, 95, 88, 92, 98, 95, 99], 
+                           bulan: [20, 25, 22, 30, 35, 32, 40, 45, 42, 50, 55, 52, 60, 65, 62, 70, 75, 80, 85, 92], 
+                           tahun: [40, 42, 45, 43, 50, 55, 53, 60, 65, 62, 70, 75, 72, 80, 85, 83, 90, 95, 92, 98] 
+                        },
+                        aiInsights: {
+                           minggu: 'Tren minggu ini menunjukkan fluktuasi positif. AI mendeteksi lonjakan kelancaran setoran sebesar 12% di akhir pekan. Prediksi: Stabilitas hafalan santri akan bertahan di atas angka 95% besok.',
+                           bulan: 'Terjadi tren uptrend konsisten dari awal bulan. Sistem AI memproyeksikan target khotam 5 Juz bagi kelompok A akan tercapai 4 hari lebih cepat dari jadwal silabus.',
+                           tahun: 'Grafik tahunan menunjukkan momentum solid pasca libur semester. Algoritma kami memprediksi rasio kelulusan mumtaz (istimewa) akan menyentuh angka 98% di akhir tahun ajaran.'
+                        },
+                        getCircleValue() { return this.filter === 'minggu' ? '88' : (this.filter === 'bulan' ? '82' : '94'); },
+                        getOffset() { return 251.2 - (251.2 * this.getCircleValue() / 100); }
+                     }"
+            x-transition:enter="transition ease-out duration-500"
+            x-transition:enter-start="opacity-0 translate-y-4"
+            x-transition:enter-end="opacity-100 translate-y-0"
+            x-cloak
+          >
+            <div
+              class="flex flex-col sm:flex-row justify-between sm:items-end mb-6 md:mb-8 gap-4 text-center sm:text-left"
+            >
+              <div>
+                <h3 class="text-xl md:text-2xl font-bold text-slate-900">
+                  Performa & Prediksi AI
+                </h3>
+                <p class="text-slate-500 text-xs md:text-sm mt-1">
+                  Analisis kelancaran hafalan santri dengan integrasi *Machine
+                  Learning*.
+                </p>
+              </div>
+              <div
+                class="bg-slate-100 p-1 md:p-1.5 rounded-xl inline-flex shadow-inner mx-auto sm:mx-0"
+              >
+                <button
+                  @click="filter = 'minggu'"
+                  :class="filter === 'minggu' ? 'bg-white shadow-sm text-googleGreen' : 'text-slate-500 hover:text-slate-700'"
+                  class="px-3 py-1.5 md:px-5 md:py-2 font-bold text-[10px] md:text-xs rounded-lg transition-all"
+                >
+                  Mingguan
+                </button>
+                <button
+                  @click="filter = 'bulan'"
+                  :class="filter === 'bulan' ? 'bg-white shadow-sm text-googleGreen' : 'text-slate-500 hover:text-slate-700'"
+                  class="px-3 py-1.5 md:px-5 md:py-2 font-bold text-[10px] md:text-xs rounded-lg transition-all"
+                >
+                  Bulanan
+                </button>
+                <button
+                  @click="filter = 'tahun'"
+                  :class="filter === 'tahun' ? 'bg-white shadow-sm text-googleGreen' : 'text-slate-500 hover:text-slate-700'"
+                  class="px-3 py-1.5 md:px-5 md:py-2 font-bold text-[10px] md:text-xs rounded-lg transition-all"
+                >
+                  Tahunan
+                </button>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+              <div
+                class="bg-white border border-slate-200 rounded-3xl p-6 md:p-8 flex flex-col items-center justify-center shadow-sm relative"
+              >
+                <h4
+                  class="font-bold text-slate-800 text-sm md:text-base text-center mb-6"
+                >
+                  Rata-rata Kelulusan
+                </h4>
+                <div
+                  class="relative w-32 h-32 md:w-40 md:h-40 flex items-center justify-center"
+                >
+                  <svg
+                    class="w-full h-full transform -rotate-90"
+                    viewBox="0 0 100 100"
+                  >
+                    <circle
+                      cx="50"
+                      cy="50"
+                      r="40"
+                      stroke="#f1f5f9"
+                      stroke-width="12"
+                      fill="none"
+                    />
+                    <circle
+                      cx="50"
+                      cy="50"
+                      r="40"
+                      stroke="#0F9D58"
+                      stroke-width="12"
+                      fill="none"
+                      stroke-linecap="round"
+                      stroke-dasharray="251.2"
+                      :stroke-dashoffset="getOffset()"
+                      class="circle-transition"
+                    />
+                  </svg>
+                  <div
+                    class="absolute inset-0 flex flex-col items-center justify-center"
+                  >
+                    <span
+                      class="text-2xl md:text-3xl font-black text-slate-800"
+                      x-text="getCircleValue() + '%'"
+                    ></span>
+                  </div>
+                </div>
+                <p
+                  class="text-[10px] md:text-xs text-slate-400 mt-6 text-center"
+                >
+                  Persentase capaian target AI mingguan.
+                </p>
+              </div>
+
+              <div
+                class="md:col-span-2 bg-white border border-slate-200 rounded-3xl p-5 md:p-8 shadow-sm flex flex-col justify-between overflow-x-auto hide-scrollbar relative"
+              >
+                <div class="min-w-[300px] w-full h-full flex flex-col">
+                  <div class="flex justify-between items-center mb-6">
+                    <h4 class="font-bold text-slate-800 text-sm md:text-base">
+                      Grafik Volume Setoran (Real-time)
+                    </h4>
+                    <span
+                      class="flex items-center gap-2 text-[10px] text-slate-400 font-bold"
+                      ><span
+                        class="w-2 h-2 rounded-full bg-googleGreen animate-pulse"
+                      ></span>
+                      LIVE</span
+                    >
+                  </div>
+
+                  <div
+                    class="flex items-end justify-between h-40 md:h-48 gap-1 md:gap-2 mb-4 mt-auto w-full border-b border-slate-100 pb-2"
+                  >
+                    <template
+                      x-for="(value, index) in chartData[filter]"
+                      :key="index"
+                    >
+                      <div
+                        class="w-full max-w-[8px] md:max-w-[12px] flex flex-col justify-end h-full group relative cursor-pointer mx-auto"
+                      >
+                        <div
+                          class="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-slate-800 text-white text-[10px] font-bold py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10"
+                          x-text="value + '%'"
+                        ></div>
+
+                        <div
+                          class="w-full rounded-full transition-all duration-700 ease-in-out relative hover:opacity-80"
+                          :class="value > 75 ? 'bg-googleGreen shadow-[0_0_8px_rgba(15,157,88,0.4)]' : (value > 45 ? 'bg-green-300' : 'bg-red-400')"
+                          :style="'height: ' + value + '%;'"
+                        ></div>
+                      </div>
+                    </template>
+                  </div>
+
+                  <div
+                    class="flex justify-between pt-2 text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-widest"
+                  >
+                    <span>Awal</span>
+                    <span>Tengah</span>
+                    <span class="text-googleGreen">Sekarang</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="bg-gradient-to-br from-slate-900 to-slate-800 border border-slate-700 rounded-3xl p-5 md:p-8 shadow-xl flex flex-col sm:flex-row items-start sm:items-center gap-5 md:gap-6 relative overflow-hidden"
+            >
+              <div
+                class="absolute -right-10 -top-10 w-32 h-32 bg-googleGreen rounded-full blur-[50px] opacity-20 pointer-events-none"
+              ></div>
+
+              <div
+                class="w-12 h-12 md:w-16 md:h-16 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center shrink-0 relative overflow-hidden shadow-inner"
+              >
+                <div
+                  class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer"
+                ></div>
+                <i
+                  class="fa-solid fa-wand-magic-sparkles text-yellow-400 text-xl md:text-2xl relative z-10"
+                ></i>
+              </div>
+
+              <div class="relative z-10">
+                <h5
+                  class="text-white font-bold text-sm md:text-lg flex items-center gap-3 mb-1.5 md:mb-2"
+                >
+                  Insight AI Sistem
+                  <span
+                    class="bg-googleGreen/20 border border-googleGreen text-googleGreenLight text-[8px] md:text-[10px] px-2 py-0.5 rounded-full uppercase tracking-wider flex items-center gap-1"
+                  >
+                    <i class="fa-solid fa-bolt text-yellow-400"></i>
+                    Auto-Generate
+                  </span>
+                </h5>
+                <p
+                  class="text-slate-300 text-xs md:text-sm leading-relaxed"
+                  x-text="aiInsights[filter]"
+                ></p>
+              </div>
+            </div>
+          </div>
+
+          <div
+            x-show="tab === 'bantuan'"
+            x-transition:enter="transition ease-out duration-500"
+            x-transition:enter-start="opacity-0 translate-y-4"
+            x-transition:enter-end="opacity-100 translate-y-0"
+            x-cloak
+          >
+            <div
+              class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 max-w-4xl mx-auto"
+            >
+              <div
+                class="bg-white border border-slate-200 p-6 md:p-8 rounded-3xl shadow-sm text-center hover:border-blue-300 transition"
+              >
+                <div
+                  class="w-12 h-12 md:w-16 md:h-16 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center text-xl md:text-2xl mx-auto mb-3 md:mb-4"
+                >
+                  <i class="fa-solid fa-laptop-code"></i>
+                </div>
+                <h4 class="font-bold text-slate-900 text-base md:text-lg mb-2">
+                  Dukungan Teknis IT
+                </h4>
+                <p class="text-xs md:text-sm text-slate-500 mb-5 md:mb-6">
+                  Masalah akses login wali santri, error sistem laporan grafik,
+                  atau perubahan data.
+                </p>
+                <button
+                  class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 md:py-3 text-sm md:text-base rounded-xl transition shadow-md flex justify-center items-center gap-2"
+                >
+                  <i class="fa-brands fa-whatsapp text-lg"></i> Hubungi Admin IT
+                </button>
+              </div>
+              <div
+                class="bg-white border border-slate-200 p-6 md:p-8 rounded-3xl shadow-sm text-center hover:border-googleGreen transition"
+              >
+                <div
+                  class="w-12 h-12 md:w-16 md:h-16 bg-green-50 text-googleGreen rounded-2xl flex items-center justify-center text-xl md:text-2xl mx-auto mb-3 md:mb-4"
+                >
+                  <i class="fa-solid fa-building-user"></i>
+                </div>
+                <h4 class="font-bold text-slate-900 text-base md:text-lg mb-2">
+                  Kantor Tahfidz Pusat
+                </h4>
+                <p class="text-xs md:text-sm text-slate-500 mb-5 md:mb-6">
+                  Pertanyaan kurikulum, pendaftaran khotmil qur'an, dan urusan
+                  akademik lainnya.
+                </p>
+                <button
+                  class="w-full bg-googleGreen hover:bg-googleGreenDark text-white font-bold py-2.5 md:py-3 text-sm md:text-base rounded-xl transition shadow-md flex justify-center items-center gap-2"
+                >
+                  <i class="fa-solid fa-phone"></i> Hubungi Kantor
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="mt-12 md:mt-16 bg-slate-900 text-white p-6 md:p-10 rounded-[2rem] shadow-xl flex flex-col lg:flex-row justify-between items-center gap-6 md:gap-10 relative overflow-hidden text-center lg:text-left"
+      >
+        <div
+          class="absolute -left-10 -top-10 w-32 h-32 md:w-40 md:h-40 bg-googleGreen rounded-full blur-[40px] md:blur-[60px] opacity-40"
+        ></div>
+        <div
+          class="absolute -right-10 -bottom-10 w-32 h-32 md:w-40 md:h-40 bg-blue-500 rounded-full blur-[40px] md:blur-[60px] opacity-20"
+        ></div>
+
+        <div class="relative z-10 w-full lg:w-1/3">
+          <div
+            class="inline-block px-3 py-1 bg-white/10 backdrop-blur-md rounded-full text-[10px] md:text-xs font-bold tracking-wider mb-3 md:mb-4 border border-white/10 uppercase"
+          >
+            Jadwal Real-time
+          </div>
+          <h3
+            class="font-black text-2xl md:text-3xl leading-tight mb-1 md:mb-2"
+          >
+            Waktu Shalat
+          </h3>
+          <p class="text-slate-400 text-xs md:text-sm">
+            <i class="fa-solid fa-location-dot mr-1 text-googleGreen"></i>
+            Bondowoso, Jawa Timur
+          </p>
+        </div>
+
+        <div
+          class="relative z-10 grid grid-cols-2 sm:grid-cols-4 gap-3 md:gap-4 w-full lg:w-2/3"
+        >
+          <div
+            class="bg-white/5 border border-white/10 backdrop-blur-lg rounded-2xl p-3 md:p-4 flex flex-col items-center hover:bg-white/10 transition cursor-default"
+          >
+            <i
+              class="fa-solid fa-sun text-slate-300 mb-2 md:mb-3 text-xl md:text-2xl drop-shadow-md"
+            ></i>
+            <p
+              class="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-0.5 md:mb-1"
+            >
+              Subuh
+            </p>
+            <p class="text-lg md:text-xl font-bold">04:15</p>
+          </div>
+          <div
+            class="bg-white/5 border border-white/10 backdrop-blur-lg rounded-2xl p-3 md:p-4 flex flex-col items-center hover:bg-white/10 transition cursor-default"
+          >
+            <i
+              class="fa-solid fa-sun text-yellow-400 mb-2 md:mb-3 text-xl md:text-2xl drop-shadow-md"
+            ></i>
+            <p
+              class="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-0.5 md:mb-1"
+            >
+              Dzuhur
+            </p>
+            <p class="text-lg md:text-xl font-bold">11:30</p>
+          </div>
+          <div
+            class="bg-white/5 border border-white/10 backdrop-blur-lg rounded-2xl p-3 md:p-4 flex flex-col items-center hover:bg-white/10 transition cursor-default"
+          >
+            <i
+              class="fa-solid fa-cloud-sun text-orange-400 mb-2 md:mb-3 text-xl md:text-2xl drop-shadow-md"
+            ></i>
+            <p
+              class="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-0.5 md:mb-1"
+            >
+              Ashar
+            </p>
+            <p class="text-lg md:text-xl font-bold">14:50</p>
+          </div>
+          <div
+            class="bg-googleGreen border border-googleGreenLight/20 shadow-[0_0_15px_rgba(15,157,88,0.4)] md:shadow-[0_0_20px_rgba(15,157,88,0.4)] backdrop-blur-lg rounded-2xl p-3 md:p-4 flex flex-col items-center relative cursor-default scale-100 md:scale-105"
+          >
+            <span class="absolute -top-1 -right-1 flex h-3 w-3 md:h-4 md:w-4">
+              <span
+                class="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"
+              ></span>
+              <span
+                class="relative inline-flex rounded-full h-3 w-3 md:h-4 md:w-4 bg-yellow-300 border-2 border-googleGreen"
+              ></span>
+            </span>
+            <i
+              class="fa-solid fa-moon text-white mb-2 md:mb-3 text-xl md:text-2xl drop-shadow-md"
+            ></i>
+            <p
+              class="text-[9px] md:text-[10px] font-bold text-green-100 uppercase tracking-widest mb-0.5 md:mb-1"
+            >
+              Maghrib
+            </p>
+            <p class="text-lg md:text-xl font-black">17:25</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer
+      class="bg-white border-t border-slate-200 pt-16 md:pt-20 pb-8 md:pb-10 mt-16 md:mt-24"
+    >
+      <div class="container mx-auto px-4 md:px-6 lg:px-8">
+        <div
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-12 mb-12 md:mb-16 text-center md:text-left"
+        >
+          <div class="lg:col-span-2 flex flex-col items-center md:items-start">
+            <div class="flex items-center gap-3 mb-4 md:mb-6">
+              <img
+                src="logoatas.png"
+                class="w-32 md:w-[180px] object-contain"
+                alt="Logo"
+              />
+            </div>
+            <p
+              class="text-slate-500 text-sm leading-relaxed mb-6 md:mb-8 max-w-sm"
+            >
+              Sistem informasi akademik terpadu untuk mencetak generasi Qur'ani
+              yang berakhlak mulia melalui monitoring hafalan real-time.
+            </p>
+            <form class="flex w-full max-w-sm gap-2">
+              <input
+                type="email"
+                placeholder="Masukkan email anda..."
+                class="w-full bg-slate-50 border border-slate-200 px-4 py-2.5 md:py-3 rounded-xl text-sm focus:outline-none focus:border-googleGreen focus:ring-1 focus:ring-googleGreen transition"
+              />
+              <button
+                type="submit"
+                class="bg-slate-900 hover:bg-slate-800 text-white px-4 md:px-5 py-2.5 md:py-3 rounded-xl transition shadow-md"
+              >
+                <i class="fa-solid fa-paper-plane"></i>
+              </button>
+            </form>
+          </div>
+          <div class="lg:col-span-1">
+            <h4
+              class="font-bold text-slate-900 text-base md:text-lg mb-4 md:mb-6"
+            >
+              Eksplorasi
+            </h4>
+            <ul
+              class="space-y-3 md:space-y-4 text-slate-500 text-xs md:text-sm font-medium"
+            >
+              <li>
+                <a
+                  href="#"
+                  class="hover:text-googleGreen inline-block transition-transform"
+                  >Beranda</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="hover:text-googleGreen inline-block transition-transform"
+                  >Portal Santri</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="hover:text-googleGreen inline-block transition-transform"
+                  >Jadwal Ujian</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="hover:text-googleGreen inline-block transition-transform"
+                  >Khotmil Qur'an</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="lg:col-span-1">
+            <h4
+              class="font-bold text-slate-900 text-base md:text-lg mb-4 md:mb-6"
+            >
+              Bantuan
+            </h4>
+            <ul
+              class="space-y-3 md:space-y-4 text-slate-500 text-xs md:text-sm font-medium"
+            >
+              <li>
+                <a
+                  href="#"
+                  class="hover:text-googleGreen inline-block transition-transform"
+                  >Pusat Bantuan</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="hover:text-googleGreen inline-block transition-transform"
+                  >Lupa Password</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="hover:text-googleGreen inline-block transition-transform"
+                  >Panduan Aplikasi</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="lg:col-span-1 flex flex-col items-center md:items-start">
+            <h4
+              class="font-bold text-slate-900 text-base md:text-lg mb-4 md:mb-6"
+            >
+              Terkoneksi
+            </h4>
+            <div
+              class="flex justify-center md:justify-start gap-3 mb-5 md:mb-6"
+            >
+              <a
+                href="#"
+                class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-blue-600 hover:text-white transition-colors"
+                ><i class="fa-brands fa-facebook-f text-sm"></i
+              ></a>
+              <a
+                href="#"
+                class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-pink-600 hover:text-white transition-colors"
+                ><i class="fa-brands fa-instagram text-sm"></i
+              ></a>
+              <a
+                href="#"
+                class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-red-600 hover:text-white transition-colors"
+                ><i class="fa-brands fa-youtube text-sm"></i
+              ></a>
+            </div>
+            <div class="text-xs md:text-sm text-slate-500 flex flex-col gap-2">
+              <p>
+                <i class="fa-solid fa-envelope text-googleGreen w-5"></i>
+                info@nuruttaqwa.id
+              </p>
+              <p>
+                <i class="fa-solid fa-phone text-googleGreen w-5"></i> (0332)
+                123456
+              </p>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pt-6 md:pt-8 border-t border-slate-200 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left"
+        >
+          <p class="text-xs md:text-sm text-slate-500 font-medium">
+            &copy; 2026 PP Nurut Taqwa. Didesain dengan
+            <i class="fa-solid fa-heart text-red-500 mx-0.5 md:mx-1"></i> untuk
+            Santri.
+          </p>
+          <div
+            class="flex justify-center gap-4 md:gap-6 text-xs md:text-sm text-slate-400 font-medium"
+          >
+            <a href="#" class="hover:text-slate-800 transition"
+              >Kebijakan Privasi</a
+            >
+            <a href="#" class="hover:text-slate-800 transition"
+              >Syarat Ketentuan</a
+            >
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
