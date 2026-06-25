@@ -6,7 +6,7 @@ Sistem Informasi Akademik Tahfidz Nurut Taqwa adalah platform digital modern yan
 Berikut adalah visualisasi antarmuka sistem yang telah dikembangkan:
 
 ### 1. Dashboard Utama & Navigasi
-![Dashboard Utama](Tangkapan%20Layar%202026-06-25%20pukul%2022.03.47.jpg)
+![Dashboard Utama](Tangkapan Layar 2026-06-26 pukul 01.14.17.png)
 
 ### 2. Statistik & Analisis AI
 ![Statistik & AI](Tangkapan%20Layar%202026-06-25%20pukul%2023.16.14.jpg)
