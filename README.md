@@ -11,6 +11,8 @@ Berikut adalah visualisasi antarmuka sistem yang telah dikembangkan:
 ### 2. Statistik & Analisis AI
 ![Statistik & AI](Tangkapan%20Layar%202026-06-26%20pukul%2001.15.01.png)
 
+### 3. Live Preview
+https://bukanustad.github.io/tahfidz_modern_website/
 ---
 
 ## Deskripsi Lengkap
